@@ -7,7 +7,9 @@ services:
     volumes:
       - .:/app
     env_file:
-      - .env-docker
+      - .env
+    environment:
+      - IN_DOCKER=1
     depends_on:
       - db
   

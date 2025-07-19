@@ -3,6 +3,5 @@ __pycache__/
 *.pyc
 
 .env
-.env-docker
 venv/
 my_thoughts.md

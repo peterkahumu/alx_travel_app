@@ -23,6 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
+IN_DOCKER = os.environ.get("IN_DOCKER") == "1"
+
+DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
+
+# toogle tehe db host based on running environment
+DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -33,6 +40,12 @@ SECRET_KEY = 'django-insecure-jezgneh72t!vy_o)t*63-d8(4*am@8o*h(h7h)iwo49f&fnoi0
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 
 # Application definition
@@ -45,10 +58,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
 
     'listings',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +106,7 @@ DATABASES = {
         'NAME': env('DB_NAME'),
         'PASSWORD': env('DB_PASSWORD'),
         'USER': env('DB_USER'),
-        'HOST': env('DB_HOST'),
+        'HOST': DB_HOST,
         'PORT': env('DB_PORT'),
     }
 }
