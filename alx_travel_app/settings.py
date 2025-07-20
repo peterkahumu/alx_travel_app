@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-IN_DOCKER = os.environ.get("IN_DOCKER") == "0"
+IN_DOCKER = os.environ.get("IN_DOCKER") == "1"
 
 DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
 
@@ -39,7 +39,7 @@ SECRET_KEY = 'django-insecure-jezgneh72t!vy_o)t*63-d8(4*am@8o*h(h7h)iwo49f&fnoi0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -100,9 +100,10 @@ WSGI_APPLICATION = 'alx_travel_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+db_server = 'postgresql' if IN_DOCKER else 'mysql'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': f'django.db.backends.{db_server}',
         'NAME': env('DB_NAME'),
         'PASSWORD': env('DB_PASSWORD'),
         'USER': env('DB_USER'),
