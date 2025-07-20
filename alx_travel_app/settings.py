@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-IN_DOCKER = os.environ.get("IN_DOCKER") == "1"
+IN_DOCKER = os.environ.get("IN_DOCKER") == "0"
 
 DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
 
-# toogle tehe db host based on running environment
+# toogle the db host based on running environment
 DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
 
 # Quick-start development settings - unsuitable for production
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'alx_travel_app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DB_NAME'),
         'PASSWORD': env('DB_PASSWORD'),
         'USER': env('DB_USER'),
