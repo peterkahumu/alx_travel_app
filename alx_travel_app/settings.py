@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-IN_DOCKER = os.environ.get("IN_DOCKER") == "1"
+IN_DOCKER = os.environ.get("IN_DOCKER") == "0"
 
 DB_HOST = "db" if IN_DOCKER else env("DB_HOST", default='localhost')
 
